@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Manual de Seguridad, sección 7.3 (Network Security Config).
+  "Prohibir tráfico HTTP en texto plano en producción, restringir la
+  confianza de CAs a las autoridades certificadoras aprobadas."
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!--
+      Excepción SOLO para desarrollo local (emulador contra localhost).
+      Eliminar este domain-config antes de cualquier build de producción,
+      o restringirlo a un build type "debug" real con un archivo
+      network_security_config específico de esa variante.
+    -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>

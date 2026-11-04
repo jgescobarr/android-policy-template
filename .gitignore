@@ -1,0 +1,20 @@
+# Gradle
+.gradle/
+build/
+build-logic/build/
+build-logic/convention/build/
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.DS_Store
+
+# Local — nunca se versiona (rutas de máquina, posibles secretos locales)
+local.properties
+env.properties
+
+# Kotlin
+.kotlin/
+
+# Detekt
+detekt-baseline.xml

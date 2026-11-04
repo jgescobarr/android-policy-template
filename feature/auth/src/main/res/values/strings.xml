@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="login_subtitle">Laboratorio Didáctico de Arquitectura y Seguridad v2.1</string>
+    <string name="email_label">Correo electrónico</string>
+    <string name="password_label">Contraseña</string>
+    <string name="btn_login_normal">Iniciar Sesión (Demo Completa)</string>
+    <string name="btn_login_biometric">Autenticar con Biometría</string>
+    <string name="btn_simulate_network_error">Simular Error de Red (500)</string>
+    <string name="btn_simulate_security_threat">Simular Amenaza / Root</string>
+    <string name="home_title">Panel de Control Didáctico</string>
+    <string name="home_welcome">Bienvenido, %1$s</string>
+    <string name="security_status_title">Inspección de Seguridad en Vivo</string>
+    <string name="status_storage">Almacenamiento: DataStore + Tink AEAD Activo</string>
+    <string name="status_root_secure">Estado Dispositivo: Entorno Seguro (Sin Root)</string>
+    <string name="status_root_threat">Estado Dispositivo: Amenaza Detectada</string>
+    <string name="btn_trigger_sync">Ejecutar Sincronización WorkManager</string>
+    <string name="btn_logout">Cerrar Sesión</string>
+</resources>

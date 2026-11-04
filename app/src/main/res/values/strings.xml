@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Manual de Arquitectura, sección 18.1 — ninguna cadena visible al
+         usuario debe ir directamente en código ni en el Manifest. -->
+    <string name="app_name">Android Policy Template</string>
+</resources>

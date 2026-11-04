@@ -1,0 +1,30 @@
+name: PR Gate (Verificación de Pull Request)
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  static-analysis-and-tests:
+    name: Análisis Estático y Pruebas Unitarias
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Dar permisos de ejecución a Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Ejecutar Análisis Estático (detekt y ktlint)
+        run: ./gradlew detektMain
+
+      - name: Ejecutar Pruebas Unitarias y Cobertura
+        run: ./gradlew testDebugUnitTest

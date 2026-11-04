@@ -1,0 +1,82 @@
+# Configuración centralizada de detekt.
+# Manual de Buenas Prácticas de Código, sección 8.2.
+# Cada regla activa aquí abajo referencia la fila de TRACEABILITY.md que
+# automatiza. No agregar reglas sin agregar también su fila correspondiente
+# en TRACEABILITY.md.
+
+build:
+  maxIssues: 0 # Bloqueante: el build falla ante cualquier hallazgo no excepcionado.
+
+potential-bugs:
+  # TRACEABILITY.md > build-logic > "Sin uso del operador !! en código de producción"
+  UnsafeCallOnNullableType:
+    active: true
+
+style:
+  # TRACEABILITY.md > build-logic > "Valores técnicos ... en constantes UPPER_SNAKE_CASE"
+  # Manual de Buenas Prácticas, sección 2.6.
+  MagicNumber:
+    active: true
+    ignoreNumbers: ['-1', '0', '1', '2']
+    ignoreAnnotated: ['Preview']
+    ignoreEnums: true
+
+  # Manual de Buenas Prácticas, sección 9.3 (Uso excesivo de var).
+  VarCouldBeVal:
+    active: true
+
+  ForbiddenComment:
+    active: true
+    comments:
+      - reason: 'Código comentado o TODO sin ticket asociado — ver sección 2.5 (Comentarios en Línea)'
+        value: '(?i)TODO(?!\(\w+-\d+\))'
+
+  ForbiddenMethodCall:
+    active: true
+    methods:
+      # TRACEABILITY.md > build-logic > "Sin uso directo de android.util.Log"
+      - reason: 'Usar la abstracción AppLogger (Timber) — ver Manual de Buenas Prácticas 6.1'
+        methodFullNameWithSignature: 'android.util.Log.*(*)'
+
+complexity:
+  # TRACEABILITY.md > build-logic > "Funciones de menos de 30 líneas"
+  LongMethod:
+    active: true
+    threshold: 30
+
+  # TRACEABILITY.md > build-logic > "Sin clases de más de 500 líneas"
+  # Manual de Buenas Prácticas, sección 9.1 (corregido en v2.0: 500, no 300).
+  LargeClass:
+    active: true
+    threshold: 500
+
+  # TRACEABILITY.md > build-logic > "Sin funciones con más de 5 parámetros"
+  LongParameterList:
+    active: true
+    functionThreshold: 6 # 5 parámetros + receiver
+
+naming:
+  # Manual de Buenas Prácticas, sección 2.1 (convenciones de nomenclatura).
+  VariableNaming:
+    active: true
+  ObjectPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][A-Z0-9_]*'
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][A-Z0-9_]*'
+
+# Ruleset custom — build-logic/detekt-rules. Cada regla corresponde a una
+# decisión normativa propia de estos tres manuales. Ver TRACEABILITY.md para el detalle de qué fila de
+# checklist automatiza cada una.
+org-policy-rules:
+  active: true
+  GatewayNamingConvention:
+    active: true
+  NoKotlinResult:
+    active: true
+  NoConcreteSecurityClassLeak:
+    active: true
+  NoAddJavascriptInterface:
+    active: true
+

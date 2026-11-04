@@ -1,0 +1,32 @@
+name: SBOM Generation (Software Bill of Materials)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  generate-sbom:
+    name: Generación de SBOM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Generar Lista de Dependencias (SBOM Artifact)
+        run: ./gradlew dependencies > sbom-report.txt
+
+      - name: Subir Artefacto SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-report
+          path: sbom-report.txt

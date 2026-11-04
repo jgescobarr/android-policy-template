@@ -1,0 +1,28 @@
+name: OWASP Dependency Check (Auditoría de Vulnerabilidades)
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # Cada lunes a las 2:00 AM
+  workflow_dispatch:
+
+jobs:
+  dependency-scan:
+    name: Escaneo OWASP Dependency-Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Dar permisos a gradlew
+        run: chmod +x gradlew
+
+      - name: Ejecutar Auditoría de Dependencias
+        run: ./gradlew dependencyCheckAnalyze --continue || true

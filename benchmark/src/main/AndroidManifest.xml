@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Nota de corrección (confirmado por sincronización real con AGP 9.4.0):
+  el tag <uses-sdk> está prohibido en el manifiesto desde AGP 9.0 — el
+  compileSdk/minSdk/targetSdk se declaran exclusivamente en build.gradle.kts.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />

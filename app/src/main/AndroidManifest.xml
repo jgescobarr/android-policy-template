@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--
+      android:allowBackup="false" — Manual de Seguridad, sección 11.4.
+      Si en el futuro se requiere backup parcial, cambiar a "true" y
+      asegurarse de que data_extraction_rules.xml siga excluyendo todo
+      lo que gestiona SecureStorageManager (ver ese archivo).
+
+      android:enableOnBackInvokedCallback="true" — Manual de
+      Arquitectura, sección 19.5 (Predictive Back).
+    -->
+    <application
+        android:name=".TemplateApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:enableOnBackInvokedCallback="true"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        tools:targetApi="34">
+
+        <!--
+          Se remueve el WorkManagerInitializer por defecto de
+          androidx.startup: Configuration.Provider en TemplateApplication
+          ya provee HiltWorkerFactory (Arq. sección 12.5). Sin este
+          remove, WorkManager se inicializaría dos veces con
+          configuraciones distintas.
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--
+              App Link de ejemplo — Manual de Seguridad, sección 11.5.
+              autoVerify="true" exige publicar assetlinks.json en
+              https://app.example.org/.well-known/assetlinks.json antes de
+              que la verificación tenga efecto real. Dominio placeholder.
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="app.example.org" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

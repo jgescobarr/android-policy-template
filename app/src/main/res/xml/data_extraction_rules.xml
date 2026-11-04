@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Manual de Seguridad, sección 11.4 (Reglas de Backup).
+  "La base de datos Room, cualquier DataStore cifrado y los directorios
+  usados por el SecureStorageManager deben excluirse siempre, incluso si
+  el backup general está habilitado."
+
+  android:allowBackup="false" en el Manifest ya deshabilita todo backup
+  por defecto — este archivo queda documentado y listo para el día en que
+  se decida habilitar backup parcial de datos NO sensibles (preferencias
+  de interfaz, por ejemplo), sin tener que recordar estas exclusiones
+  desde cero.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="secure_storage.preferences_pb" />
+        <exclude domain="sharedpref" path="secure_storage_keyset.xml" />
+        <exclude domain="database" path="template_database" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="secure_storage.preferences_pb" />
+        <exclude domain="sharedpref" path="secure_storage_keyset.xml" />
+        <exclude domain="database" path="template_database" />
+    </device-transfer>
+</data-extraction-rules>

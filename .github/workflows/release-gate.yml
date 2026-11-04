@@ -1,0 +1,28 @@
+name: Release Gate (Validación de Release)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-release:
+    name: Compilación Release y Reglas ProGuard
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Dar permisos de ejecución a Gradle
+        run: chmod +x gradlew
+
+      - name: Ensamblar APK/Bundle de Release
+        run: ./gradlew :app:assembleRelease :app:bundleRelease

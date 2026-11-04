@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      Manual de Seguridad, sección 11.4 (Reglas de Backup): este módulo no
+      declara aquí ninguna política de backup — la declara :app, único lugar
+      donde corresponde (allowBackup="false" o dataExtractionRules). Ver
+      TRACEABILITY.md > :app.
+    -->
+
+    <!--
+      Package Visibility (API 30+) — Manual de Seguridad, sección 10.2.
+      Necesario para que RootDetector.hasRootManagementApp() pueda detectar
+      estas apps mediante PackageManager sin requerir QUERY_ALL_PACKAGES
+      (que Google Play rechaza para la mayoría de apps). Sin esta
+      declaración, getPackageInfo() reporta "no instalado" incluso si la
+      app de gestión de root sí está presente — una falsa sensación de
+      dispositivo limpio, encontrada al validar contra Android 11+ real.
+    -->
+    <queries>
+        <package android:name="com.topjohnwu.magisk" />
+        <package android:name="eu.chainfire.supersu" />
+        <package android:name="com.noshufou.android.su" />
+        <package android:name="com.koushikdutta.superuser" />
+        <package android:name="com.thirdparty.superuser" />
+        <package android:name="com.yellowes.su" />
+        <package android:name="com.formyhm.hideroot" />
+        <package android:name="com.devadvance.rootcloak" />
+        <package android:name="com.devadvance.rootcloakplus" />
+        <package android:name="com.zachareew.systemuituner" />
+    </queries>
+
+</manifest>
